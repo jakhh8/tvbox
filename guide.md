@@ -2,19 +2,16 @@
 unplug 5tb
 boot archiso
 
-verify the internal drive is name /dev/sda (lsblk -f) and which is usb
+verify the internal drive is name /dev/sda (lsblk -f)
 potentially update userconfig
 
-mkdir -p /mnt/usb
-mount /dev/sda1 OR ACTUAL /mnt/usb
+git clone https://github.com/jakhh8/tvbox ~/setup
 
-check where user_configuration.json is stored
-run the archinstaller with this user_config (archinstall --config path/to/user_configuration.json)
+run the archinstaller with this user_config (archinstall --config ~/setup/user_configuration.json)
 
 setup user/passwd
 
-mount /dev/sda1 OR ACTUAL /mnt/usb
-cp /mnt/usb/setup-tvbox.sh /mnt/home/<username>/
+cp ~/setup /mnt/home/<username>/setup
 
 unplug usb
 
@@ -25,7 +22,7 @@ reboot
 log in (potentially through ssh)
 plug in 5tb drive in usb3.0
 
-run setup-tvbox.sh
+run ~/setup/setup-tvbox.sh
 
 
 ## Step 3

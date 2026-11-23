@@ -59,6 +59,32 @@ xset s off -dpms &
 flex-launcher &
 EOF
 
+cp /etc/xdg/openbox/rc.xml ~/.config/openbox/rc.xml
+python3 - << 'EOF'
+with open("/home/" + __import__("os").environ["USER"] + "/.config/openbox/rc.xml", "r") as f:
+    xml = f.read()
+
+old_bind = """  <keybind key="A-F4">
+    <action name="Close"/>
+  </keybind>"""
+
+new_bind = """  <keybind key="A-F4">
+    <action name="If">
+      <query target="focus">
+        <title type="regex">^(?!Flex Launcher).*$</title>
+      </query>
+      <then>
+        <action name="Close"/>
+      </then>
+    </action>
+  </keybind>"""
+
+if old_bind in xml:
+    xml = xml.replace(old_bind, new_bind, 1)
+    with open("/home/" + __import__("os").environ["USER"] + "/.config/openbox/rc.xml", "w") as f:
+        f.write(xml)
+EOF
+
 echo "exec openbox-session" > ~/.xinitrc
 
 if ! grep -q "exec startx" ~/.bash_profile 2>/dev/null; then
@@ -96,47 +122,59 @@ CursorTimeout = 3
 
 [Layout]
 MaxButtons = 5
-ButtonWidth = 220
-ButtonHeight = 220
-ButtonSpacing = 60
+IconSize=240
+IconSpacing=45
+VCenter=22%
 Font = /usr/share/flex-launcher/assets/fonts/OpenSans-Regular.ttf
-FontSize = 28
-FontColor = #FFFFFF
-Background = /usr/share/flex-launcher/assets/backgrounds/dark.png
+FontSize = 24
+FontColor = #E5E5EA
+Background = ~/setup/images/tvbox-background.png
 Highlight = /usr/share/flex-launcher/assets/highlights/rounded.png
-HighlightPadding = 16
-TitleEnabled = true
-TitleFont = /usr/share/flex-launcher/assets/fonts/OpenSans-Bold.ttf
-TitleFontSize = 48
-TitleColor = #FFFFFF
+HighlightPadding = 12
+TitleEnabled = false
 ClockEnabled = true
 ClockFont = /usr/share/flex-launcher/assets/fonts/OpenSans-Regular.ttf
-ClockFontSize = 32
-ClockColor = #CCCCCC
+ClockFontSize = 28
+ClockColor = #8E8E93
 ClockFormat = 24
 
 [Main]
-Title = HTPC Home
+Title = TVBox
 
-Entry1Title = Kodi
-Entry1Icon = /usr/share/flex-launcher/assets/icons/kodi.png
-Entry1Cmd = kodi
+Entry1Title = YouTube
+Entry1Icon = ~/setup/images/tvbox-youtube-tile.png
+Entry1Cmd = firefox --kiosk https://youtube.com
 
-Entry2Title = Moonlight
-Entry2Icon = /usr/share/flex-launcher/assets/icons/moonlight.png
-Entry2Cmd = moonlight-qt
+Entry2Title = ES-DE
+Entry2Icon = ~/setup/images/tvbox-es-de-tile.png
+Entry2Cmd = moonlight-qt stream "desktop" "ES-DE"
 
-Entry3Title = Firefox
-Entry3Icon = /usr/share/flex-launcher/assets/icons/firefox.png
-Entry3Cmd = firefox --kiosk
+Entry3Title = Steam
+Entry3Icon = ~/setup/images/tvbox-steam-tile.png
+Entry3Cmd = moonlight-qt stream "desktop" "Steam Big Picture"
 
-Entry4Title = Reboot
-Entry4Icon = /usr/share/flex-launcher/assets/icons/restart.png
-Entry4Cmd = systemctl reboot
+Entry4Title = Kodi
+Entry4Icon = ~/setup/images/tvbox-kodi-tile.png
+Entry4Cmd = kodi
 
-Entry5Title = Shutdown
-Entry5Icon = /usr/share/flex-launcher/assets/icons/power.png
-Entry5Cmd = systemctl poweroff
+Entry5Title = Settings
+Entry5Icon = ~/setup/images/tvbox-settings-tile.png
+Entry5Cmd = submenu Settings
+
+[Settings]
+Title = Settings
+
+Entry1Title = Moonlight
+Entry1Icon = ~/setup/images/tvbox-moonlight-tile.png
+Entry1Cmd = moonlight-qt
+
+Entry2Title = Reboot
+Entry2Icon = ~/setup/images/tvbox-restart-tile.png
+Entry2Cmd = systemctl reboot
+
+Entry3Title = Shutdown
+Entry3Icon = ~/setup/images/tvbox-power-tile.png
+Entry3Cmd = systemctl poweroff
 EOF
 
 # 6. Configure Samba Network Share
