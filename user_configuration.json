@@ -1,0 +1,139 @@
+{
+    "archinstall-language": "English",
+    "bootloader": "Grub",
+    "disk_config": {
+        "config_type": "default_layout",
+        "device_modifications": [
+            {
+                "device": "/dev/sda",
+                "wipe": true,
+                "partitions": [
+                    {
+                        "btrfs": [],
+                        "dev_path": null,
+                        "flags": [
+                            "boot",
+                            "esp"
+                        ],
+                        "fs_type": "fat32",
+                        "mount_options": [],
+                        "mountpoint": "/boot",
+                        "obj_id": "efi-part",
+                        "size": {
+                            "sector_size": {
+                                "unit": "B",
+                                "value": 512
+                            },
+                            "unit": "MiB",
+                            "value": 512
+                        },
+                        "start": {
+                            "sector_size": {
+                                "unit": "B",
+                                "value": 512
+                            },
+                            "unit": "MiB",
+                            "value": 1
+                        },
+                        "status": "create",
+                        "type": "primary"
+                    },
+                    {
+                        "btrfs": [],
+                        "dev_path": null,
+                        "flags": [],
+                        "fs_type": "ext4",
+                        "mount_options": [],
+                        "mountpoint": "/",
+                        "obj_id": "root-part",
+                        "size": {
+                            "sector_size": {
+                                "unit": "B",
+                                "value": 512
+                            },
+                            "unit": "Percent",
+                            "value": 100
+                        },
+                        "start": {
+                            "sector_size": {
+                                "unit": "B",
+                                "value": 512
+                            },
+                            "unit": "MiB",
+                            "value": 513
+                        },
+                        "status": "create",
+                        "type": "primary"
+                    }
+                ]
+            }
+        ]
+    },
+    "hostname": "tvbox",
+    "kernels": [
+        "linux-lts"
+    ],
+    "locale_config": {
+        "kb_layout": "dk",
+        "sys_enc": "UTF-8",
+        "sys_lang": "en_US.UTF-8"
+    },
+    "mirror_config": {
+        "mirror_regions": {
+            "Denmark": [
+                "https://dotsrc.org"
+            ]
+        }
+    },
+    "network_config": {
+        "type": "nm"
+    },
+    "ntp": true,
+    "packages": [
+        "xorg-server",
+        "xorg-xinit",
+        "openbox",
+        "kodi",
+        "moonlight-qt",
+        "firefox",
+        "samba",
+        "docker",
+        "docker-compose",
+        "intel-ucode",
+        "mesa",
+        "libva-intel-driver",
+        "pipewire",
+        "pipewire-pulse",
+        "pipewire-alsa",
+        "wireplumber",
+        "sdl2-compat",
+        "sdl2_image",
+        "sdl2_ttf",
+        "libinih",
+        "openssh",
+        "git",
+        "vim",
+        "htop"
+    ],
+    "profile_config": {
+        "gfx_driver": "Intel (open-source)",
+        "greeter": null,
+        "profile": {
+            "details": [
+                "Openbox"
+            ],
+            "main": "Desktop"
+        }
+    },
+    "services": [
+        "docker",
+        "sshd",
+        "smb",
+        "nmb"
+    ],
+    "swap": {
+        "algorithm": "zstd",
+        "enabled": true
+    },
+    "timezone": "Europe/Copenhagen"
+}
